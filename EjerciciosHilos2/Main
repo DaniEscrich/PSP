@@ -1,0 +1,83 @@
+class DatoCompartido{
+    int dato;
+    boolean disponible;
+
+    public synchronized void obtener() {
+        while (!disponible){
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        disponible = false;
+        notifyAll();
+        System.out.println("Obtener: " + dato);
+    }
+
+    public synchronized void poner(int nuevoDato) {
+        while (disponible){
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        disponible = true;
+        dato = nuevoDato;
+        System.out.println("Poner: " + nuevoDato);
+        notifyAll();
+    }
+}
+class Productor extends Thread{
+        private DatoCompartido datoCompartido;
+
+    public Productor(DatoCompartido datoCompartido) {
+        this.datoCompartido = datoCompartido;
+    }
+
+    @Override
+    public void run() {
+        for (int i = 1 ; i<10 ; i++){
+            datoCompartido.poner(i);
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+}
+
+class Consumidor extends Thread{
+    private DatoCompartido datoCompartido;
+
+    public Consumidor(DatoCompartido datoCompartido) {
+        this.datoCompartido = datoCompartido;
+    }
+
+    @Override
+    public void run() {
+        for (int i = 1 ; i<10 ; i++){
+            datoCompartido.obtener();
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        DatoCompartido s = new DatoCompartido();
+        Productor p = new Productor(s);
+        Consumidor c = new Consumidor(s);
+        p.start();
+        c.start();
+
+    }
+}
