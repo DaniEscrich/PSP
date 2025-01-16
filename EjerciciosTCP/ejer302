@@ -1,0 +1,56 @@
+import java.io.BufferedReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+public class ejer302 {
+    public static void main(String[] args) {
+        URL url = null;
+        URL url2 = null;
+        URL url3 = null;
+        try {
+            url = new URL("http://docs.oracle.com/");
+            System.out.println("URL Completa: " + url);
+            System.out.println("getProtocol: " + url.getProtocol());
+            System.out.println("getHost: " + url.getHost());
+            System.out.println("getPort: " + url.getPort());
+            System.out.println("getFile: " + url.getFile());
+            System.out.println("getUserInfo: " + url.getUserInfo());
+            System.out.println("getPath: " + url.getPath());
+            System.out.println("getAuthority: " + url.getAuthority());
+            System.out.println("getQuery: " + url.getQuery());
+            System.out.println("getDefaultPort: " + url.getDefaultPort());
+
+            url2 = new URL("http","docs.oracle.com","/javase/23");
+            System.out.println("----------------------");
+
+            System.out.println("URL Completa: " + url2);
+            System.out.println("getProtocol: " + url2.getProtocol());
+            System.out.println("getHost: " + url2.getHost());
+            System.out.println("getPort: " + url2.getPort());
+            System.out.println("getFile: " + url2.getFile());
+            System.out.println("getUserInfo: " + url2.getUserInfo());
+            System.out.println("getUserPath: " + url2.getPath());
+            System.out.println("getAuthority: " + url2.getAuthority());
+            System.out.println("getQuery: " + url2.getQuery());
+            System.out.println("getDefaultPort: " + url2.getDefaultPort());
+
+            url3 = new URL("http","docs.oracle.com",123,"/javase/23");
+            System.out.println("----------------------");
+            System.out.println("URL Completa: " + url3);
+            System.out.println("getProtocol: " + url3.getProtocol());
+            System.out.println("getHost: " + url3.getHost());
+            System.out.println("getPort: " + url3.getPort());
+            System.out.println("getFile: " + url3.getFile());
+            System.out.println("getUserInfo: " + url3.getUserInfo());
+            System.out.println("getPath: " + url3.getPath());
+            System.out.println("getAuthority: " + url3.getAuthority());
+            System.out.println("getQuery: " + url3.getQuery());
+            System.out.println("getDefaultPort: " + url3.getDefaultPort());
+
+
+            System.out.println();
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
