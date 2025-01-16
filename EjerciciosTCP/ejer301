@@ -1,0 +1,38 @@
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+public class ejer301 {
+    public static void main(String[] args) {
+        try {
+            System.out.println("SALIDA PARA LOCALHOST:");
+            InetAddress in = InetAddress.getByName("localhost");
+            System.out.println("Metodo getByName(): " + in);
+            System.out.println("Metodo getLocalHost(): " + InetAddress.getLocalHost());
+            System.out.println("Metodo getHostName(): " + in.getHostName());
+            System.out.println("Metodo getHostAddress(): " + in.getHostAddress());
+            System.out.println("Metodo toString(): " + in.toString());
+            System.out.println("Metodo getCanonicalHostName(): " + in.getCanonicalHostName());
+
+
+            System.out.println("======================");
+            System.out.println("SALIDA PARA UNA URL:");
+            InetAddress inUrl = InetAddress.getByName("www.google.es");
+            System.out.println("Metodo getByName(): " + inUrl);
+            System.out.println("Metodo getLocalHost(): " + InetAddress.getLocalHost());
+            System.out.println("Metodo getHostName(): " + inUrl.getHostName());
+            System.out.println("Metodo getHostAddress: " + inUrl.getHostAddress());
+            System.out.println("Metodo toString: " + inUrl.toString());
+            System.out.println("Metodo getCanonicalHostName(): " +  inUrl.getCanonicalHostName());
+
+            InetAddress[] urlDirecciones = InetAddress.getAllByName("www.google.es");
+
+            System.out.println("DIRECCIONES IP PARA: " + inUrl.getHostName());
+            for (int i = 0; i< urlDirecciones.length; i ++){
+                System.out.println(urlDirecciones[i]);
+            }
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+}
