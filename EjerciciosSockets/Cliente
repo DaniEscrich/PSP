@@ -1,0 +1,27 @@
+import java.io.*;
+import java.net.*;
+import java.util.ArrayList;
+
+public class Cliente {
+    public static void main(String[] args) {
+        String host = "localhost";
+        int puerto = 2000;
+
+        ArrayList<String> clientes = new ArrayList<>();
+        clientes.add("Juan Pérez");
+        clientes.add("María López");
+        clientes.add("Carlos García");
+        clientes.add("Ana Martínez");
+        try (Socket socket = new Socket(host, puerto);
+             ObjectOutputStream salida = new ObjectOutputStream(socket.getOutputStream())) {
+
+            System.out.println("Iniciando conexión con el servidor " + host + ":" + puerto);
+
+            salida.writeObject(clientes);
+            System.out.println("Objeto enviado al servidor: " + clientes);
+            System.out.println("Conexión Cerrada");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
