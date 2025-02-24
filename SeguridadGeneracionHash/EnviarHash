@@ -1,0 +1,40 @@
+package SeguridadGeneracionHash;
+
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.security.MessageDigest;
+
+class DataObject implements Serializable {
+    private static final long serializableUID = 1L;
+    String datos;
+    byte[] hash;
+
+    public DataObject(String datos, byte[] hash) {
+        this.datos = datos;
+        this.hash = hash;
+    }
+}
+
+public class EnviarHash {
+    public static void main(String[] args) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            String datos = "En un lugar de la Mancha, de cuyo nombre no quiero acordarme";
+            byte dataBytes[] = datos.getBytes();
+            md.update(dataBytes);
+            byte resumen[] = md.digest();
+
+            DataObject dataObject = new DataObject(datos, resumen);
+            FileOutputStream fileout = new FileOutputStream("Datos.dat");
+            ObjectOutputStream dataOS = new ObjectOutputStream(fileout);
+            dataOS.writeObject(dataObject);
+            dataOS.close();
+            fileout.close();
+            System.out.println("Archivo 'Datos.dat' creado con Ã©xito.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
