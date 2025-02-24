@@ -1,0 +1,28 @@
+package ComunicacionesEnRedUDP.Primeros;
+
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+
+
+public class Cliente {
+    public static void main(String[] args) throws IOException {
+        final int puerto = 12345;
+        byte[] buffer = new byte[1024];
+        InetAddress destino = InetAddress.getByName("localhost");//
+        String mensaje = "Hola Barbara";
+        buffer = mensaje.getBytes();
+        DatagramPacket envio = new DatagramPacket(buffer, buffer.length,destino, puerto);
+        DatagramSocket socketUDP = new DatagramSocket(34567);
+        System.out.println("Envio el datagrama");
+        socketUDP.send(envio);
+
+        DatagramPacket recibo = new DatagramPacket(buffer, buffer.
+                length);
+        socketUDP.receive(recibo);
+        String mensaje2 = new String(recibo.getData(), 0,recibo.getLength()).trim();
+        System.out.println("Recibo numero de caracteres 'a' que son: " + mensaje2);
+        socketUDP.close();
+    }
+}
