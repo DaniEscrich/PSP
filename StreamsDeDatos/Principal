@@ -1,0 +1,136 @@
+package StreamsDeDatos;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Principal {
+    public static void main(String[] args) {
+        boolean salir = false;
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Profesional> profesionales = new ArrayList<>();
+
+        while (!salir) {
+            System.out.println("\nSOFTWARE DE GESTIÃ“N DEL IBIS SPORT CLUB");
+            System.out.println("=======================================");
+            System.out.println("1. Introducir datos de un profesional");
+            System.out.println("2. Consulta con Filtro");
+            System.out.println("3. Listado de Nombres");
+            System.out.println("4. Salir");
+            System.out.print("Seleccione una opciÃ³n: ");
+            int opcion = sc.nextInt();
+            sc.nextLine();
+
+            switch (opcion) {
+                case 1:
+                    System.out.print("Ingrese nombre de profesional: ");
+                    String nombre = sc.nextLine();
+
+                    System.out.print("Introduce la edad del profesional: ");
+                    int edad = sc.nextInt();
+                    sc.nextLine();  // Limpia el buffer
+
+                    System.out.print("Introduce GÃ©nero del profesional (m/f): ");
+                    char genero = sc.next().charAt(0);
+                    sc.nextLine();  // Limpia el buffer
+
+                    System.out.print("Introduce la especialidad del profesional (1 para Jugador, 2 para Directivo, 3 para Fisio): ");
+                    int especialidad = sc.nextInt();
+                    sc.nextLine();  // Limpia el buffer
+
+                    if (especialidad == 1) {
+                        System.out.println("Se ha dado de alta a un profesional de tipo Jugador");
+                    } else if (especialidad == 2) {
+                        System.out.println("Se ha dado de alta a un profesional de tipo Directivo");
+                    } else if (especialidad == 3) {
+                        System.out.println("Se ha dado de alta a un profesional de tipo Fisio");
+                    } else {
+                        System.out.println("No existe esa especialidad.");
+                        break;
+                    }
+
+                    Profesional pf = new Profesional(nombre, edad, genero, especialidad);
+                    profesionales.add(pf);
+                    System.out.println("Profesional aÃ±adido: " + pf.toString());
+                    break;
+
+                case 2:
+                    System.out.println("\nSUBMENÃš DE CONSULTAS");
+                    System.out.println("1. Profesionales por GÃ©nero");
+                    System.out.println("2. Profesionales por Tipo");
+                    System.out.println("3. Profesionales por Edad");
+                    System.out.println("4. Volver");
+                    System.out.print("Seleccione una opciÃ³n: ");
+                    int opcion2 = sc.nextInt();
+                    sc.nextLine();  // Limpia el buffer
+
+                    switch (opcion2) {
+                        case 1:
+                            System.out.println("\nMasculinos:");
+                            profesionales.stream()
+                                    .filter(p -> p.getGenero() == 'm')
+                                    .forEach(System.out::println);
+
+                            System.out.println("\nFemeninos:");
+                            profesionales.stream()
+                                    .filter(p -> p.getGenero() == 'f')
+                                    .forEach(System.out::println);
+                            break;
+
+                        case 2:
+                            System.out.println("\nJugadores:");
+                            profesionales.stream()
+                                    .filter(p -> p.getTipoProfesional() == 1)
+                                    .forEach(System.out::println);
+
+                            System.out.println("\nDirectivos:");
+                            profesionales.stream()
+                                    .filter(p -> p.getTipoProfesional() == 2)
+                                    .forEach(System.out::println);
+
+                            System.out.println("\nFisios:");
+                            profesionales.stream()
+                                    .filter(p -> p.getTipoProfesional() == 3)
+                                    .forEach(System.out::println);
+                            break;
+
+                        case 3:
+                            System.out.print("Dime una edad mÃ­nima: ");
+                            int edadMin = sc.nextInt();
+                            System.out.print("Dime una edad mÃ¡xima: ");
+                            int edadMax = sc.nextInt();
+                            sc.nextLine();  // Limpia el buffer
+
+                            System.out.println("\nProfesionales en el rango de edad:");
+                            profesionales.stream()
+                                    .filter(p -> p.getEdad() >= edadMin && p.getEdad() <= edadMax)
+                                    .forEach(System.out::println);
+                            break;
+
+                        case 4:
+                            System.out.println("Volviendo al menÃº principal...");
+                            break;
+
+                        default:
+                            System.out.println("OpciÃ³n no vÃ¡lida.");
+                    }
+                    break;
+
+                case 3:
+                    System.out.println("\nListado de profesionales:");
+                    for (Profesional recorrer : profesionales) {
+                        System.out.println("- " + recorrer.getNombre());
+                    }
+                    break;
+
+                case 4:
+                    System.out.println("Has salido del programa.");
+                    salir = true;
+                    break;
+
+                default:
+                    System.out.println("OpciÃ³n no vÃ¡lida.");
+            }
+        }
+        sc.close();
+    }
+}
